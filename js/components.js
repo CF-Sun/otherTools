@@ -50,7 +50,7 @@
         o.tag || null
       ),
       h('div', { class: 'qstem', html: inline(q.stem) }),
-      q.code ? h('div', { html: codeBlock(q.code, 'python') }) : null,
+      q.code ? h('div', { html: codeBlock(q.code, q.lang || 'python') }) : null,
       optList
     );
 

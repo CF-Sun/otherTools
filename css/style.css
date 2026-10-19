@@ -215,9 +215,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .prose { font-size: 1rem; }
 .prose ul, .prose ol { padding-left: 1.4em; margin: .5em 0; }
 .prose li { margin: .25em 0; }
-.prose table { border-collapse: collapse; width: 100%; margin: 1em 0; font-size: .92rem; display: block; overflow-x: auto; }
-.prose th, .prose td { border: 1px solid var(--border); padding: 7px 11px; text-align: left; vertical-align: top; min-width: 90px; }
+/* 表格依內容寬度排版；窄螢幕時在容器內左右捲動，而不是把欄位壓成一兩個字寬 */
+.tbl-wrap { overflow-x: auto; margin: 1em 0; -webkit-overflow-scrolling: touch; border-radius: 6px; }
+.prose table { border-collapse: collapse; width: max-content; max-width: 780px; margin: 0; font-size: .92rem; }
+.prose th, .prose td { border: 1px solid var(--border); padding: 7px 11px; text-align: left; vertical-align: top; }
 .prose th { background: var(--surface-2); white-space: nowrap; }
+@media (max-width: 880px) { .prose table { max-width: 640px; } }
 .prose tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
 .prose h2 { padding-bottom: 4px; border-bottom: 1px solid var(--border); }
 

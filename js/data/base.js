@@ -15,6 +15,8 @@
   const qCount = {};
   const cCount = {};
   const pad = (n) => String(n).padStart(2, '0');
+  /* 文字中的「§」一律轉成反引號（行內程式碼），程式碼區塊（code 欄位）不轉換 */
+  const bt = (s) => (typeof s === 'string' ? s.replace(/§/g, '`') : s);
 
   /** Q(item, level, stem, options, answerIndex, explanation, extra)
    *  level: 1 基礎 / 2 進階 / 3 應用(情境、計算、程式)
@@ -23,20 +25,26 @@
     qCount[item] = (qCount[item] || 0) + 1;
     IPAS.questions.push(
       Object.assign(
-        { id: item + '-' + pad(qCount[item]), item, subject: item.slice(0, 3), level, stem, options, answer, explain },
+        { id: item + '-' + pad(qCount[item]), item, subject: item.slice(0, 3), level, stem: bt(stem), options: options.map(bt), answer, explain: bt(explain) },
         extra || {}
       )
     );
   };
 
+  /** N(item, markdown) 註冊筆記。為了在 JS 樣板字串裡方便書寫，筆記中以「§」代替反引號（行內程式碼與程式區塊）。
+   *  呼叫時請搭配 String.raw，反斜線才會原樣保留：N('L21101', String.raw`...`) */
+  IPAS.N = function (item, md) {
+    IPAS.notes[item] = md.replace(/§/g, '`').trim();
+  };
+
   /** C(item, front, back) 名詞卡 */
   IPAS.C = function (item, front, back) {
     cCount[item] = (cCount[item] || 0) + 1;
-    IPAS.cards.push({ id: item + '-c' + pad(cCount[item]), item, subject: item.slice(0, 3), front, back });
+    IPAS.cards.push({ id: item + '-c' + pad(cCount[item]), item, subject: item.slice(0, 3), front: bt(front), back: bt(back) });
   };
 
   /** 速查表 */
   IPAS.S = function (id, subjects, title, md) {
-    IPAS.cheats.push({ id, subjects, title, md });
+    IPAS.cheats.push({ id, subjects, title, md: bt(md) });
   };
 })();
