@@ -29,6 +29,12 @@
     );
   };
 
+  /** N(item, markdown) 註冊筆記。為了在 JS 樣板字串裡方便書寫，筆記中以「§」代替反引號（行內程式碼與程式區塊）。
+   *  呼叫時請搭配 String.raw，反斜線才會原樣保留：N('L21101', String.raw`...`) */
+  IPAS.N = function (item, md) {
+    IPAS.notes[item] = md.replace(/§/g, '`').trim();
+  };
+
   /** C(item, front, back) 名詞卡 */
   IPAS.C = function (item, front, back) {
     cCount[item] = (cCount[item] || 0) + 1;
