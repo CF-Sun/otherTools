@@ -1,0 +1,14 @@
+{
+  "name": "ipas-ai-planner-study",
+  "version": "1.0.0",
+  "private": true,
+  "description": "iPAS AI 應用規劃師（中級）自學站：純靜態、零相依",
+  "scripts": {
+    "serve": "npx http-server -p 8080 -c-1 .",
+    "validate": "node tests/validate-data.mjs",
+    "test:smoke": "node tests/smoke.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  }
+}
